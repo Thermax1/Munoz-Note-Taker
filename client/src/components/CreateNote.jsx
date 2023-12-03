@@ -1,34 +1,52 @@
 import React, { useState } from "react";
 
-function CreateNote(props) {
+function CreateNote({ onAdd }) {
+  // State to manage the new note's title and content
   const [newNote, setNewNote] = useState({
     title: "",
     content: ""
   });
 
-  function handleChange(event) {
+  // Function to handle input changes and update state
+  const handleChange = (event) => {
     const { name, value } = event.target;
+    setNewNote((prevNote) => ({
+      ...prevNote,
+      [name]: value
+    }));
+  };
 
-    setNewNote((lastNote) => {
-      return {
-        ...lastNote,
-        [name]: value
-      };
-    });
-  }
-
-  function submitNote(event) {
-    props.onAdd(newNote);
-    setNewNote({
-      title: "",
-      content: ""
-    });
+  // Function to submit a new note to the backend
+  const submitNote = async (event) => {
     event.preventDefault();
-  }
+    try {
+      // Send a POST request to the backend API '/api/notes' to add a new note
+      const response = await fetch("http://localhost:5000/api/notes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newNote) // Send the new note data in JSON format
+      });
+
+      // Get the response data (the newly added note) from the server
+      const data = await response.json();
+      
+      // Update the UI with the newly added note by calling the onAdd function passed from the parent component
+      onAdd(data);
+      
+      // Clear the input fields after adding the note
+      setNewNote({ title: "", content: "" });
+    } catch (error) {
+      // Handle errors if the fetch or processing fails
+      console.error("Error adding note:", error);
+    }
+  };
 
   return (
     <div>
-      <form>
+      {/* Form to input new note details */}
+      <form onSubmit={submitNote}>
         <input
           name="title"
           onChange={handleChange}
@@ -42,7 +60,8 @@ function CreateNote(props) {
           placeholder="Enter note here!"
           rows="3"
         />
-        <button onClick={submitNote}>Add</button>
+        {/* Button to submit the form and add the note */}
+        <button type="submit">Add</button>
       </form>
     </div>
   );
