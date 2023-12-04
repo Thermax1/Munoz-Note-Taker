@@ -13,12 +13,8 @@ const noteSchema = new mongoose.Schema({
 });
 
 const Note = mongoose.model("Note", noteSchema);
-const corsOptions = {
-  origin: 'https://cs-641-final.vercel.app/',
-  optionsSuccessStatus: 200
-};
 
-app.use(cors(corsOptions));
+app.use(cors()); // this is so that there's no issue when our front-end and back end run on seperate ports.
 app.use(express.json()); //parses JSON as it comes
 
 // when we refresh the page, app.get retrieves the notes currently in the database.
