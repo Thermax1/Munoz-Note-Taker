@@ -6,7 +6,7 @@ import myAuth from "../firebaseConfig";
 function Authentication({onSuccess}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isSignUp, setIsSignUp] = useState(true); // Whether it's a sign-up or sign-in mode
+  const [isSignUp, setIsSignUp] = useState(true); // Whether it's a sign-up or sign-in
   const [error, setError] = useState(null);
 
   const auth = getAuth(myAuth); // Get Firebase Auth instance
@@ -32,7 +32,7 @@ function Authentication({onSuccess}) {
 
   return (
     <div className="auth-container">
-      <h2>{isSignUp ? "Sign Up" : "Sign In"}</h2>
+      <h2>{isSignUp ? "Sign Up" : "Sign In"}</h2> {/*took me an embarrassing amount of time to figure out I can write the conditional like this */}
       <form onSubmit={handleAuthentication}>
         <input
           type="email"
@@ -48,7 +48,7 @@ function Authentication({onSuccess}) {
         />
         <button type="submit">{isSignUp ? "Sign Up" : "Sign In"}</button>
       </form>
-      {error && <p className="error-message">{error}</p>}
+      {error && <p className="error here">{error}</p>}
       <p onClick={() => setIsSignUp(!isSignUp)}>
         {isSignUp ? "Sign in here!" : "Don't have an account? Sign up"}
       </p>
