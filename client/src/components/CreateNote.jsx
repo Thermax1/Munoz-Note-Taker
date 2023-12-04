@@ -21,7 +21,7 @@ function CreateNote({ onAdd }) {
     event.preventDefault();
     try {
       // Send a POST request to the backend API '/api/notes' to add a new note
-      const response = await fetch("https://munoz-cs641.koyeb.app/api/notes", {
+      const response = await fetch("https://cs641-munoz.cyclic.app/api/notes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

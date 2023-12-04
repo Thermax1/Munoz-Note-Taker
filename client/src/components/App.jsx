@@ -40,7 +40,7 @@ function App() {
 
   const fetchNotes = async () => {
     try {
-      const response = await fetch("https://munoz-cs641.koyeb.app/api/notes"); // Fetch notes from the backend
+      const response = await fetch("https://cs641-munoz.cyclic.app/api/notes"); // Fetch notes from the backend
       const data = await response.json();
       setNotes(data);
     } catch (error) {
@@ -50,7 +50,7 @@ function App() {
 
   const addNote = async (newNote) => {
     try {
-      const response = await fetch("https://munoz-cs641.koyeb.app/api/notes", {
+      const response = await fetch("https://cs641-munoz.cyclic.app/api/notes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -67,7 +67,7 @@ function App() {
 
   const deleteNote = async (id) => {
     try {
-      await fetch(`https://munoz-cs641.koyeb.app/api/notes/${id}`, {
+      await fetch(`https://cs641-munoz.cyclic.app/api/notes/${id}`, {
         method: "DELETE"
       });
 
