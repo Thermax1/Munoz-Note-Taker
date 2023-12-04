@@ -59,7 +59,7 @@ app.delete("/api/notes/:id", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT; //allows you to manually set your port. Otherwise, go with 5000. This is good in case 5000 is already taken
+const PORT = process.env.PORT || 5000; //allows you to manually set your port. Otherwise, go with 5000. This is good in case 5000 is already taken
 // Start the Express server and listen on the specified port
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
