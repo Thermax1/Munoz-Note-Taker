@@ -9,28 +9,28 @@ import myAuth from "../firebaseConfig";
 
 function App() {
   const [notes, setNotes] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(false); // upon page opening, we check to see if the user has logged in to access the page
-  const auth = getAuth(myAuth);
+  const [loggedIn, setLoggedIn] = useState(false); //able to see if user logged in or not
+  const auth = getAuth(myAuth); //my firebase configuration
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const userOut = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setLoggedIn(true);
-        fetchNotes();
+        setLoggedIn(true);//person logged in
+        fetchNotes(); //current notes get loaded
       } else {
         setLoggedIn(false);
         setNotes([]);
       }
     });
 
-    return () => unsubscribe();
+    return () => userOut();
   }, []);
 
-  const handleSignIn = () => {
+  const handleSignIn = () => { //like handleEvent or handleClick
     setLoggedIn(true);
   };
 
-  const handleLogout = () => {
+  const handleLogout = () => { //what runs when logout is clicked
     signOut(auth).then(() => {
       setLoggedIn(false);
     }).catch((error) => {
@@ -67,11 +67,11 @@ function App() {
 
   const deleteNote = async (id) => {
     try {
-      await fetch(`https://cs641-munoz.cyclic.app/api/notes/${id}`, {
+      await fetch(`https://cs641-munoz.cyclic.app/api/notes/${id}`, { //delete via ID to make sure its correct
         method: "DELETE"
       });
 
-      setNotes(notes.filter((note) => note._id !== id)); // Update notes state after deletion
+      setNotes(notes.filter((note) => note._id !== id)); // notes state is updated to reflect the deletions
     } catch (error) {
       console.error("Error deleting note:", error);
     }
@@ -81,7 +81,7 @@ function App() {
     <div>
       <Header />
 
-      {loggedIn ? (
+      {loggedIn ? ( //use ternary operators like we did in class
       <div>
       <CreateNote onAdd={addNote} />
       {notes.map((note) => (
@@ -97,7 +97,7 @@ function App() {
       <button className="logout-button" onClick={handleLogout}>Logout</button>
     </div>
   ) : (
-    <Authentication onSuccess={handleSignIn} />
+    <Authentication onSuccess={handleSignIn} /> //render Authentication page otherwise until sign-in, making the notes app appear
   )}
   </div>
   );

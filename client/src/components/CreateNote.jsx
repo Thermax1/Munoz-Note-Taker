@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 function CreateNote({ onAdd }) {
-  // State to manage the new note's title and content
   const [newNote, setNewNote] = useState({
     title: "",
     content: ""
@@ -16,29 +15,26 @@ function CreateNote({ onAdd }) {
     }));
   };
 
-  // Function to submit a new note to the backend
+  // adds the new note to the backend
   const submitNote = async (event) => {
     event.preventDefault();
     try {
-      // Send a POST request to the backend API '/api/notes' to add a new note
       const response = await fetch("https://cs641-munoz.cyclic.app/api/notes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(newNote) // Send the new note data in JSON format
+        body: JSON.stringify(newNote) 
       });
 
-      // Get the response data (the newly added note) from the server
       const data = await response.json();
       
-      // Update the UI with the newly added note by calling the onAdd function passed from the parent component
+      // use onAdd directly instead of props.
       onAdd(data);
       
-      // Clear the input fields after adding the note
+      // Clear title and content after each add
       setNewNote({ title: "", content: "" });
     } catch (error) {
-      // Handle errors if the fetch or processing fails
       console.error("Error adding note:", error);
     }
   };

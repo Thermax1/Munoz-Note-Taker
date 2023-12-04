@@ -11,23 +11,22 @@ function Authentication({onSuccess}) {
 
   const auth = getAuth(myAuth); // Get Firebase Auth instance
 
-  const handleAuthentication = async (e) => {
-    e.preventDefault();
+  const handleAuthentication = async (event) => {
+    event.preventDefault();
     try {
       if (isSignUp) {
-        // Sign-up
+        // check console for success
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         console.log("User signed up:", userCredential.user);
       } else {
-        // Sign-in
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         console.log("User signed in:", userCredential.user);
       }
       onSuccess();
-      // Handle successful sign-up/sign-in (e.g., navigate to the note-taking app)
+      // checks to see if log-in worked. Gets routed back to App.jsx to see if we show this page or the App
     } catch (error) {
-      setError(error.message); // Set error message in state
-      console.error("Authentication error:", error.message);
+      setError(error.message); 
+      console.error("Auth failed!", error.message);
     }
   };
 
@@ -39,19 +38,19 @@ function Authentication({onSuccess}) {
           type="email"
           placeholder="Email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(event) => setEmail(event.target.value)}
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(event) => setPassword(event.target.value)}
         />
         <button type="submit">{isSignUp ? "Sign Up" : "Sign In"}</button>
       </form>
       {error && <p className="error-message">{error}</p>}
       <p onClick={() => setIsSignUp(!isSignUp)}>
-        {isSignUp ? "Already have an account? Sign in" : "Don't have an account? Sign up"}
+        {isSignUp ? "Sign in here!" : "Don't have an account? Sign up"}
       </p>
     </div>
   );
