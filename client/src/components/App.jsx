@@ -40,7 +40,7 @@ function App() {
 
   const fetchNotes = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/notes"); // Fetch notes from the backend
+      const response = await fetch(`${backendURL}/api/notes`); // Fetch notes from the backend
       const data = await response.json();
       setNotes(data);
     } catch (error) {
@@ -50,7 +50,7 @@ function App() {
 
   const addNote = async (newNote) => {
     try {
-      const response = await fetch("http://localhost:5000/api/notes", {
+      const response = await fetch(`${backendURL}/api/notes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -67,7 +67,7 @@ function App() {
 
   const deleteNote = async (id) => {
     try {
-      await fetch(`http://localhost:5000/api/notes/${id}`, {
+      await fetch(`${backendURL}/api/notes/${id}`, {
         method: "DELETE"
       });
 

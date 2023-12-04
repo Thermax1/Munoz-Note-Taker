@@ -21,7 +21,7 @@ function CreateNote({ onAdd }) {
     event.preventDefault();
     try {
       // Send a POST request to the backend API '/api/notes' to add a new note
-      const response = await fetch("http://localhost:5000/api/notes", {
+      const response = await fetch(`${backendURL}/api/notes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
