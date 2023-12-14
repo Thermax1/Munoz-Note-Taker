@@ -50,7 +50,7 @@ function Authentication({onSuccess}) {
       </form>
       {error && <p className="error here">{error}</p>}
       <p onClick={() => setIsSignUp(!isSignUp)}>
-        {isSignUp ? "Sign in here!" : "Don't have an account? Sign up"}
+        {isSignUp ? "Sign in here!" : "Sign up here!"}
       </p>
     </div>
   );
